@@ -1,0 +1,70 @@
+{
+	"name": "arithsjs",
+	"displayName": "arithsjs",
+	"description": "",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.90.0"
+	},
+	"publisher": "com.axiommd",
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:arithsjs.aurora"
+	],
+	"main": "./out/extension",
+	"contributes": {
+		"languages": [
+            {
+                "id": "aurora",
+                "aliases": [
+                    "Aurora",
+                    "aurora"
+                ],
+                "extensions": [".aurora"],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "aurora",
+                "scopeName": "source.aurora",
+                "path": "syntaxes/aurora.tmLanguage.json"
+            }
+        ],
+		"viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "aurora-container",
+                    "title": "Aurora",
+                    "icon": "$(symbol-structure)"
+                }
+            ]
+        },
+        "views": {
+            "aurora-container": [
+                {
+                    "id": "aurora",
+                    "type": "webview",
+                    "name": "Patient Care Scenario"
+                }
+            ]
+        },
+		"commands": [
+			{
+				"command": "arithsjs.aurora",
+				"title": "Hello Aurora"
+			}
+		]
+	},
+	"devDependencies": {
+		"@scala-js/vite-plugin-scalajs": "^1.0.0",
+		"typescript": "^5.6.3",
+        "@types/vscode": "^1.94.0"
+	},
+	"dependencies": {
+		"arith": "^0.0.9"
+	}
+
+}
