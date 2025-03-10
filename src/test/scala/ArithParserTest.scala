@@ -23,7 +23,9 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
       
       // info(s"checkFiles: $checkFiles")    
       val checkFiles =  filenames
-          .map{FileReader.checkFileAccess(_)}
+          .map{fn => 
+            info(s"filename: $fn")
+            FileReader.checkFileAccess(fn)}
           .map{ _ == true }
 
       Future(checkFiles) map { l =>
@@ -35,12 +37,10 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
     "work" in {
       import typings.arith.outLanguageArithEvaluatorMod.interpretEvaluations
 
-      // interpretEvaluations(filenames(0)).toFuture map { res =>
-      //   info(s"!!!!!!!!!!!!!!")
-      //   res should be (Some(8))
+        Future{ 5+3 should be (8)}
+
       }
     }
-   }
   
 
 
