@@ -7,19 +7,20 @@ import scala.scalajs.js
 
 import testutils.FileReader
 import typings.arith.outLanguageGeneratedAstMod.{Module}
-// import typings.auroraone.auroraoneStrings.{Clinical,Issues,Orders}
 import scala.concurrent.Future
 import typings.std.stdStrings.s
 
 class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
+  import FileReader.*
   val fExtension = "arith"
   val filenames = List("math1", "math2").map{filename}
-  private def filename(name: String) = FileReader.testAuroraFiles + "\\" +s"$name.$fExtension"
+  private def filename(name: String) = FileReader.testAuroraFiles / s"$name.$fExtension"
 
   override implicit def executionContext = scala.concurrent.ExecutionContext.Implicits.global
 
   "Test files" should {
     "exist" in {
+      info(s"Platform: ${FileReader.platform}")
       
       // info(s"checkFiles: $checkFiles")    
       val checkFiles =  filenames

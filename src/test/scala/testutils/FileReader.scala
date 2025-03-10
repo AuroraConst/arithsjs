@@ -2,9 +2,9 @@ package com.axiom.testutils
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.*
-import typings.std.global.FileReader
 import scala.util.Try
 
+import scala.scalajs.js.Dynamic.global
 
 
 @js.native
@@ -32,12 +32,31 @@ private object Process extends js.Object {
 }
 
 
+/**
+  * FileReader object to read files from the file system and creates a string dsl for platorm independent paths
+  */
+
 object FileReader:
+  def platform =  if (!js.isUndefined(global.process)) {
+      global.process.platform.asInstanceOf[String]
+    } else {
+      "unknown"
+    }
+  val separator = platform match {
+    case "win32" => "\\"
+    case _ => "/"
+  }
+
+  extension (spath:String)
+    def /(path: String): String = spath + separator + path
+
+
+
   def readFile(path: String): String =  FS.readFileSync(path, "utf-8")
   def cwd = Process.cwd()
-  def testResourcePath = cwd + "\\src\\test\\resources"
-  def testAuroraFiles = testResourcePath + "\\aurora" //aurora files will be placed here for testing
-  def testHelloFile = testResourcePath + "\\hello.txt"
+  def testResourcePath = cwd / "src" / "test" / "resources"
+  def testAuroraFiles = testResourcePath / "aurora" //aurora files will be placed here for testing
+  def testHelloFile = testResourcePath / "hello.txt"
   
   def checkFileAccess(path: String, mode: Int = FSConstants.F_OK): Boolean = 
     Try(FS.accessSync(path, mode)).map(_ => true).getOrElse(false)
@@ -48,3 +67,4 @@ object FileReader:
     fsMethods.foreach{ m =>
       println(s"$m")
     }
+end FileReader
