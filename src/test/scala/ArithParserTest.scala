@@ -4,31 +4,25 @@ import org.scalatest._
 import wordspec._
 import matchers._
 import scala.scalajs.js
-
+// import typings.std.Map as TSMap
 import testingutils.*
-
-import typings.std.Map
 import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral,Evaluation,isBinaryExpression}
-import typings.arith.arithStrings.{Percentsign, Asterisk,Plussign,`-_`,Slash,^}
-import scala.concurrent.Future
-import scala.collection.mutable
-import scala.scalajs.js.JSConverters.*
-import scala.util.Try
-import scala.collection.mutable.ListBuffer
+
+
+
 
 class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
-  val fExtension = "arith"
-  val filenames = List("math1", "math2").map{filename}
-  private def filename(name: String) = testAuroraFiles / s"$name.$fExtension"
+  
+  
 
-  override implicit def executionContext = scala.concurrent.ExecutionContext.Implicits.global
+  override implicit def executionContext = global
 
   "Test files" should {
     "exist" in {
       info(s"Platform: ${platform}")
       
       // info(s"checkFiles: $checkFiles")    
-      val checkFiles =  filenames
+      val checkFiles =  testFiles
           .map{fn => 
             info(s"filename: $fn")
             checkFileAccess(fn)}
@@ -41,13 +35,12 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
 
   "math1 file" should {
     "work" in {
-      import typings.arith.outCliCliUtilMod.{parse}
-      import typings.arith.outLanguageArithEvaluatorMod.interpretEvaluations
+  
       case class TestBinaryExpression(isBinary:Boolean, left:Double, right:Double, operator:String, value:Double):
         override def toString = s" $left $operator $right =  $value"
 
 
-      val ast = Try{parse(filenames(0)).toFuture}.recover(e => {
+      val ast = Try{parse(testFiles(0)).toFuture}.recover(e => {
         info(s"error: $e")
         Future.failed(e)
       }).get
