@@ -8,11 +8,13 @@ import scala.scalajs.js
 import testutils.FileReader
 import typings.std.Map
 import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral,Evaluation,isBinaryExpression}
+import typings.arith.arithStrings.{Percentsign, Asterisk,Plussign,`-_`,Slash,^}
 import scala.concurrent.Future
 import scala.collection.mutable
 import scala.scalajs.js.JSConverters.*
 import scala.util.Try
 import typings.vscodeLanguageserverTypes.mod.SemanticTokenTypes.operator
+import scala.collection.mutable.ListBuffer
 
 class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
   import FileReader.*
@@ -42,7 +44,9 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
     "work" in {
       import typings.arith.outCliCliUtilMod.{parse}
       import typings.arith.outLanguageArithEvaluatorMod.interpretEvaluations
-      case class BinExp(left:Double, right:Double, operator:String, value:Double)
+      case class BinExp(isBinary:Boolean, left:Double, right:Double, operator:String, value:Double)
+
+      var result:mutable.ListBuffer[BinExp] = ListBuffer()
 
       
 
@@ -58,9 +62,11 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
           val operator = expression.operator
           val left = expression.left.asInstanceOf[NumberLiteral].value
           val right = expression.right.asInstanceOf[NumberLiteral].value
+          result.addOne(BinExp(isBinary,left, right, s"$operator", value)) 
           info(s"isBinary: $isBinary left: $left right: $right operator: $operator, value: $value")
         })
         
+        info(s"$result")
         module.name should be ("binaryexpressions")
       }
       
