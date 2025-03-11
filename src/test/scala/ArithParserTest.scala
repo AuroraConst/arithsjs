@@ -6,11 +6,13 @@ import matchers._
 import scala.scalajs.js
 
 import testutils.FileReader
-import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral}
+import typings.std.Map
+import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral,Evaluation}
 import scala.concurrent.Future
-import typings.std.stdStrings.s
-import typings.std.stdStrings.head
+import scala.collection.mutable
+import scala.scalajs.js.JSConverters.*
 import scala.util.Try
+import typings.vscodeLanguageserverTypes.mod.SemanticTokenTypes.operator
 
 class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
   import FileReader.*
@@ -40,8 +42,9 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
     "work" in {
       import typings.arith.outCliCliUtilMod.{parse}
       import typings.arith.outLanguageArithEvaluatorMod.interpretEvaluations
+      case class BinExp(left:Double, right:Double, operator:String, value:Double)
 
-      import scala.scalajs.js.JSConverters.*
+      
 
       val ast = Try{parse(filenames(0)).toFuture}.recover(e => {
         info(s"error: $e")
