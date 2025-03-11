@@ -61,7 +61,7 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
           val right = expression.right.asInstanceOf[NumberLiteral].value
           val operator = s"${expression.operator}"
           TestBinaryExpression(isBinary, left, right, operator, v)}
-        result.foreach(s => info(s.toString))
+        result.foreach(r => info(s"$r"))
         result.size should be (6)
         module.name should be ("binaryexpressions")
       }
