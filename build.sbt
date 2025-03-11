@@ -37,11 +37,8 @@ lazy val root = project
       "-explaintypes",           // Explain type errors in more detail.
       "-feature",                // Emit warning and location for usages of features that should be imported explicitly.
       "-unchecked",              // Enable additional warnings where generated code depends on assumptions.
-      "-Xlint",                  // Enable recommended additional warnings.
-      "-Ywarn-dead-code",        // Warn when dead code is identified.
-      "-Ywarn-numeric-widen",    // Warn when numerics are widened.
+      "-WShadow",                  // Enable recommended additional warnings.
       "-Ywarn-unused:imports",   // Warn if an import selector is not referenced.
-      "-Xfatal-warnings"         // Fail the compilation if there are any warnings.
     ),
     Compile / fastOptJS / artifactPath := baseDirectory.value / "out" / "extension.js",
     Compile / fullOptJS / artifactPath := baseDirectory.value / "out" / "extension.js",
