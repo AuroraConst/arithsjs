@@ -7,7 +7,7 @@ import scala.scalajs.js
 
 import testutils.FileReader
 import typings.std.Map
-import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral,Evaluation}
+import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral,Evaluation,isBinaryExpression}
 import scala.concurrent.Future
 import scala.collection.mutable
 import scala.scalajs.js.JSConverters.*
@@ -53,12 +53,14 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
 
       ast.map{ module =>
         val keys = interpretEvaluations(module).forEach((value, key,map) => {
+          val isBinary = isBinaryExpression(key.expression)
           val expression = key.expression.asInstanceOf[BinaryExpression]
           val operator = expression.operator
           val left = expression.left.asInstanceOf[NumberLiteral].value
           val right = expression.right.asInstanceOf[NumberLiteral].value
-          info(s"left: $left right: $right operator: $operator, value: $value")
+          info(s"isBinary: $isBinary left: $left right: $right operator: $operator, value: $value")
         })
+        
         module.name should be ("binaryexpressions")
       }
       
