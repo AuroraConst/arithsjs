@@ -1,4 +1,4 @@
-module test
+module binaryexpressions
 3*6;
 5+2;
 6/4;
