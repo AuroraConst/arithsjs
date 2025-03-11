@@ -5,7 +5,8 @@ import wordspec._
 import matchers._
 import scala.scalajs.js
 
-import testutils.FileReader
+import testingutils.*
+
 import typings.std.Map
 import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral,Evaluation,isBinaryExpression}
 import typings.arith.arithStrings.{Percentsign, Asterisk,Plussign,`-_`,Slash,^}
@@ -17,22 +18,21 @@ import typings.vscodeLanguageserverTypes.mod.SemanticTokenTypes.operator
 import scala.collection.mutable.ListBuffer
 
 class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
-  import FileReader.*
   val fExtension = "arith"
   val filenames = List("math1", "math2").map{filename}
-  private def filename(name: String) = FileReader.testAuroraFiles / s"$name.$fExtension"
+  private def filename(name: String) = testAuroraFiles / s"$name.$fExtension"
 
   override implicit def executionContext = scala.concurrent.ExecutionContext.Implicits.global
 
   "Test files" should {
     "exist" in {
-      info(s"Platform: ${FileReader.platform}")
+      info(s"Platform: ${platform}")
       
       // info(s"checkFiles: $checkFiles")    
       val checkFiles =  filenames
           .map{fn => 
             info(s"filename: $fn")
-            FileReader.checkFileAccess(fn)}
+            checkFileAccess(fn)}
           .map{ _ == true }
 
       Future(checkFiles) map { l =>
@@ -44,11 +44,9 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
     "work" in {
       import typings.arith.outCliCliUtilMod.{parse}
       import typings.arith.outLanguageArithEvaluatorMod.interpretEvaluations
-      case class BinExp(isBinary:Boolean, left:Double, right:Double, operator:String, value:Double)
+      case class BinExp(isBinary:Boolean, left:Double, right:Double, operator:String, value:Double):
+        override def toString = s" $left $operator $right =  $value"
 
-      var result:mutable.ListBuffer[BinExp] = ListBuffer()
-
-      
 
       val ast = Try{parse(filenames(0)).toFuture}.recover(e => {
         info(s"error: $e")
@@ -56,17 +54,15 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
       }).get
 
       ast.map{ module =>
-        val keys = interpretEvaluations(module).forEach((value, key,map) => {
-          val isBinary = isBinaryExpression(key.expression)
-          val expression = key.expression.asInstanceOf[BinaryExpression]
-          val operator = expression.operator
+        val result = interpretEvaluations(module).toScalaMap.map{(k,v) => 
+          val isBinary = isBinaryExpression(k.expression)
+          val expression = k.expression.asInstanceOf[BinaryExpression]
           val left = expression.left.asInstanceOf[NumberLiteral].value
           val right = expression.right.asInstanceOf[NumberLiteral].value
-          result.addOne(BinExp(isBinary,left, right, s"$operator", value)) 
-          info(s"isBinary: $isBinary left: $left right: $right operator: $operator, value: $value")
-        })
-        
-        info(s"$result")
+          val operator = s"${expression.operator}"
+          BinExp(isBinary, left, right, operator, v)}
+        result.foreach(s => info(s.toString))
+        result.size should be (6)
         module.name should be ("binaryexpressions")
       }
       

@@ -36,7 +36,7 @@ private object Process extends js.Object {
   * FileReader object to read files from the file system and creates a string dsl for platorm independent paths
   */
 
-object FileReader:
+object FileUtils:
   def platform =  if (!js.isUndefined(global.process)) {
       global.process.platform.asInstanceOf[String]
     } else {
@@ -67,4 +67,4 @@ object FileReader:
     fsMethods.foreach{ m =>
       println(s"$m")
     }
-end FileReader
+end FileUtils
