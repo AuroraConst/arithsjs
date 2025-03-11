@@ -31,6 +31,18 @@ lazy val root = project
   .settings(
     scalaVersion := DependencyVersions.scala,
     moduleName := "arithsjs",
+    scalacOptions ++= Seq(
+      "-deprecation",            // Emit warning and location for usages of deprecated APIs.
+      "-encoding", "utf-8",      // Specify character encoding used by source files.
+      "-explaintypes",           // Explain type errors in more detail.
+      "-feature",                // Emit warning and location for usages of features that should be imported explicitly.
+      "-unchecked",              // Enable additional warnings where generated code depends on assumptions.
+      "-Xlint",                  // Enable recommended additional warnings.
+      "-Ywarn-dead-code",        // Warn when dead code is identified.
+      "-Ywarn-numeric-widen",    // Warn when numerics are widened.
+      "-Ywarn-unused:imports",   // Warn if an import selector is not referenced.
+      "-Xfatal-warnings"         // Fail the compilation if there are any warnings.
+    ),
     Compile / fastOptJS / artifactPath := baseDirectory.value / "out" / "extension.js",
     Compile / fullOptJS / artifactPath := baseDirectory.value / "out" / "extension.js",
     open := openVSCodeTask.dependsOn(Compile / fastOptJS).value,
