@@ -14,7 +14,6 @@ import scala.concurrent.Future
 import scala.collection.mutable
 import scala.scalajs.js.JSConverters.*
 import scala.util.Try
-import typings.vscodeLanguageserverTypes.mod.SemanticTokenTypes.operator
 import scala.collection.mutable.ListBuffer
 
 class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
