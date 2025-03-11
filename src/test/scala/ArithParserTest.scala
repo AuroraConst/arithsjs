@@ -44,7 +44,7 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
     "work" in {
       import typings.arith.outCliCliUtilMod.{parse}
       import typings.arith.outLanguageArithEvaluatorMod.interpretEvaluations
-      case class BinExp(isBinary:Boolean, left:Double, right:Double, operator:String, value:Double):
+      case class TestBinaryExpression(isBinary:Boolean, left:Double, right:Double, operator:String, value:Double):
         override def toString = s" $left $operator $right =  $value"
 
 
@@ -60,7 +60,7 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
           val left = expression.left.asInstanceOf[NumberLiteral].value
           val right = expression.right.asInstanceOf[NumberLiteral].value
           val operator = s"${expression.operator}"
-          BinExp(isBinary, left, right, operator, v)}
+          TestBinaryExpression(isBinary, left, right, operator, v)}
         result.foreach(s => info(s.toString))
         result.size should be (6)
         module.name should be ("binaryexpressions")
