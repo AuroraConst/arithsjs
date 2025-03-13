@@ -39,6 +39,7 @@ class TempTest extends wordspec.AsyncWordSpec with should.Matchers :
       import testingutils.langAstUtils.*
       ast.map {module =>
         val listOfElements = streamAllContents(module).toScalaList
+        //note I use the f"" string interpolator to format the output
         listOfElements.foreach{ node => info(f"Asttype: ${node.$type}%16s, text: ${node.$cstNode.toOption.get.text}%5s, textOffset: ${node.$cstNode.toOption.get.offset}%4s")}
         listOfElements.size shouldNot be(0) // remember   asynchronous tests must end in a Future[Assertion] 
       }
