@@ -7,6 +7,8 @@ package com.axiom.testutils
   */
 import typings.std.Map as TsMap
 import scala.collection.mutable
+import typings.langium.libUtilsStreamMod.TreeStream
+
 object Convertors:
 
   extension [K,V] (m:TsMap[K, V])
@@ -15,4 +17,10 @@ object Convertors:
       m.forEach{(v, k, _) => scalaMutMap += (k -> v)}
       scalaMutMap.toMap
 
+  extension [T] (s:TreeStream[T])
+    def toScalaList: List[T] = 
+      var list = mutable.ListBuffer[T]()
+      s.forEach{ (v, _) => list = list += v}
+      list.toList
+      
   

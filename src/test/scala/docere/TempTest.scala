@@ -16,31 +16,32 @@ class TempTest extends wordspec.AsyncWordSpec with should.Matchers :
       }).get
 
   "CstUtils" should {
-    "get offset information" in {
-      // import langCstUtils.*
-      import typings.arith.outLanguageArithUtilMod.CstUtils.*
+    "get offset and range information" in {
+      import testingutils.langCstUtils.*
       ast.map{ module =>
-        val result =  findLeafNodeAtOffset(module.$cstNode.toOption.get, 0).toOption.get
-        info(s"offset: ${result.offset}")
-        result.offset should be(0)
+        module.name should be("binaryexpressions")
+
+        val moduleNode =  findLeafNodeAtOffset(module.$cstNode.toOption.get, 0).toOption.get //through  toOption convertor, we convert from CstNode | undefined to Option[CstNode]
+        
+        info(s"moduleNode.text}")
+        info(s"offset: moduleNode.offset}, line: moduleNode.range.start.line}, endposition: moduleNode.end}")
+        moduleNode.offset should be(0)
+        moduleNode.text should be("module")
+        (moduleNode.end - moduleNode.offset) should be("module".length())
       }
     }
   }  
 
 
 
-  "Stream Ast" should {
-    "work like this" in {
-      import typings.arith.outLanguageArithUtilMod.AstUtils.*
-      ast.map {
-        streamAllContents(_)
-      }.map{ s =>
-        s.forEach{ (node,v) =>
-          info(s"${node.$type}: ${node.$cstNode.toOption.get.text}, $v")
-        }
+  "streamAllContents:TreeSTream" should {
+    "convert to scala List[T] and then can be traversed" in {
+      import testingutils.langAstUtils.*
+      ast.map {module =>
+        val listOfElements = streamAllContents(module).toScalaList
+        listOfElements.foreach{ node => info(f"Asttype: ${node.$type}%16s, text: ${node.$cstNode.toOption.get.text}%5s, textOffset: ${node.$cstNode.toOption.get.offset}%4s")}
+        listOfElements.size shouldNot be(0) // remember   asynchronous tests must end in a Future[Assertion] 
       }
-
-      Future("not implemented" should be ("not implemented"))
     }
   }
 
