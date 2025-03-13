@@ -21,13 +21,15 @@ class TempTest extends wordspec.AsyncWordSpec with should.Matchers :
       ast.map{ module =>
         module.name should be("binaryexpressions")
 
-        val moduleNode =  findLeafNodeAtOffset(module.$cstNode.toOption.get, 0).toOption.get //through  toOption convertor, we convert from CstNode | undefined to Option[CstNode]
+        val leafeNode =  findLeafNodeAtOffset(module.$cstNode.toOption.get, 0).toOption.get //through  toOption convertor, we convert from CstNode | undefined to Option[CstNode]
         
-        info(s"moduleNode.text}")
-        info(s"offset: moduleNode.offset}, line: moduleNode.range.start.line}, endposition: moduleNode.end}")
-        moduleNode.offset should be(0)
-        moduleNode.text should be("module")
-        (moduleNode.end - moduleNode.offset) should be("module".length())
+        leafeNode.text should be("module")
+        
+        info(s"offset: leafeNode.offset}, line: leafeNode.range.start.line}, endposition: leafeNode.end}")
+        
+        leafeNode.offset should be(0)
+        
+        (leafeNode.end - leafeNode.offset) should be("module".length())
       }
     }
   }  
