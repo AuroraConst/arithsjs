@@ -62,9 +62,11 @@
 		"@scala-js/vite-plugin-scalajs": "^1.0.0",
 		"typescript": "^5.6.3",
         "@types/vscode": "^1.94.0"
+        
 	},
 	"dependencies": {
-		"arith": "^0.0.15"
+		"arith": "^0.0.16",
+        "langium": "~3.2.0"
 	}
 
 }
