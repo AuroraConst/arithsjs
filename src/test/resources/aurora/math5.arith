@@ -1,0 +1,6 @@
+module errorcases
+
+10 / 0;                
+def f(x): x * 2;
+f();                  
+g(5);                
