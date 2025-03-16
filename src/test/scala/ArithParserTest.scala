@@ -3,11 +3,10 @@ package com.axiom
 import org.scalatest._
 import wordspec._
 import matchers._
-// import scala.scalajs.js
+import scala.scalajs.js
 // import typings.std.Map as TSMap
 import testingutils.*
-import langGenAst.{Module, BinaryExpression, NumberLiteral,Evaluation,isBinaryExpression}
-// import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral,Evaluation,isBinaryExpression}
+import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral,Evaluation,isBinaryExpression}
 
 
 
