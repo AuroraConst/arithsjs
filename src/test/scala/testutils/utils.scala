@@ -10,8 +10,8 @@ package testingutils
   export typings.arith.outLanguageGeneratedAstMod as langGenAst
   
   //the following two imports were helped by exporting them from arith-utils from the typesript project
-  export typings.arith.outLanguageArithUtilMod.AstUtils as langAstUtils
-  export typings.arith.outLanguageArithUtilMod.CstUtils as langCstUtils
+  // export typings.arith.outLanguageArithUtilMod.AstUtils as langAstUtils
+  // export typings.arith.outLanguageArithUtilMod.CstUtils as langCstUtils
 
 
   val fExtension = "arith"
