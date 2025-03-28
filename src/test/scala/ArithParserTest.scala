@@ -9,7 +9,8 @@ import testingutils.*
 import langGenAst.{Module, BinaryExpression, NumberLiteral,Evaluation,isBinaryExpression}
 // import typings.arith.outLanguageGeneratedAstMod.{Module, BinaryExpression, NumberLiteral,Evaluation,isBinaryExpression}
 
-
+import typings.langium.libUtilsAstUtilsMod*
+import typ
 
 
 class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
