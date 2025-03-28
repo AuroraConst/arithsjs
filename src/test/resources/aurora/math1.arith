@@ -4,4 +4,4 @@ module binaryexpressions
 6/4;
 1-5;
 5^2;
-5%2;
+5%2;  

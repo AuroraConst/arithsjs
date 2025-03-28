@@ -1,0 +1,14 @@
+module functionsanddefs
+
+def square(x): x * x;
+def cube(x): x ^ 3;
+def add(a, b): a + b;
+def multiply(a, b): a * b;
+def factorial(n): n <= 1 ? 1 : n * factorial(n - 1);
+
+square(4);             
+cube(3);             
+add(5, 3);             
+multiply(4, 5);       
+square(add(2, 3));    
+factorial(5);          

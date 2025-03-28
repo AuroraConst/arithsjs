@@ -68,4 +68,3 @@ class ArithParserTest extends wordspec.AsyncWordSpec with should.Matchers {
   }
   
 
-
